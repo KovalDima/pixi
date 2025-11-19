@@ -1,0 +1,19 @@
+{
+  "include": [
+    "src/ts/**/*.ts",
+    "src/ts/**/*.d.ts",
+    "index.d.ts"
+  ],
+  "compilerOptions": {
+    "strict": true,
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  }
+}

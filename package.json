@@ -1,0 +1,34 @@
+{
+  "name": "pixi-intro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "author": "Dima Koval",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "howler": "^2.2.4",
+    "pixi.js": "^7.4.3"
+  },
+  "devDependencies": {
+    "@pixi/devtools": "^2.0.1",
+    "@types/dat.gui": "^0.7.13",
+    "@types/howler": "^2.2.12",
+    "@types/stats.js": "^0.17.4",
+    "copy-webpack-plugin": "^13.0.1",
+    "dat.gui": "^0.7.9",
+    "html-webpack-plugin": "^5.6.4",
+    "stats.js": "^0.17.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "webpack": "^5.102.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2",
+    "webpack-merge": "^6.0.1"
+  }
+}
