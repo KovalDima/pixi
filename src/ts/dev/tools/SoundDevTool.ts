@@ -1,6 +1,6 @@
-import {GUI} from "dat.gui";
+import { GUI } from "dat.gui";
 import DevToolUtils from "../utils/DevToolUtils";
-import type {ILogger} from "../../../common/types/ILogger";
+import type { ILogger } from "../../../common/types/ILogger";
 import soundsManifest from "res/sounds/sounds_manifest.json";
 import { type SoundService, type SoundName } from "../../services/SoundService";
 
