@@ -11,10 +11,13 @@ import {type FilterService} from "../services/FilterService";
 import {type RectangleObject} from "../gameobjects/RectangleObject";
 import {type SpriteGridObject} from "../gameobjects/SpriteGridObject";
 import {type SoundService} from "../services/SoundService";
+import {GUISpineObject} from "./gui-integrators/GUISpineObject";
+import type {SpineObject} from "../gameobjects/SpineObject";
 
 export type TGUIGameObjects = {
     rectangle: RectangleObject,
-    spriteGrid: SpriteGridObject
+    spriteGrid: SpriteGridObject,
+    spine: SpineObject,
 }
 
 export type TGUIServices = {
@@ -31,7 +34,7 @@ export class AppDevTools {
 
     public init(gameObjects: TGUIGameObjects, services: TGUIServices) {
         const guiManager = new GUIManager();
-        const {spriteGrid, rectangle} = gameObjects;
+        const {spriteGrid, rectangle, spine} = gameObjects;
         const {filterService, soundService} = services;
 
         void initPixiDevTools({app: this.app});
@@ -43,8 +46,9 @@ export class AppDevTools {
 
         new GUIRectangleObject(rectangle, guiManager, () => rectangle.redraw());
         new GUISpriteGridObject(spriteGrid, guiManager, () => spriteGrid.redraw());
-        new SoundDevTool(guiManager.getGui(), soundService, funnyLogger)
+        new SoundDevTool(guiManager.getGui(), soundService, funnyLogger);
         new GUIFilters(filterService, guiManager);
+        new GUISpineObject(spine, guiManager);
     }
 
     private runStats() {

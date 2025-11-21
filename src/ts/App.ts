@@ -12,6 +12,8 @@ import {MaskService} from "./services/MaskService";
 import {StageEffects} from "./services/StageEffects";
 import {Config} from "./Config";
 import {GameObjectsConstants} from "./GameObjectsConstants";
+import {SpineObject} from "./gameobjects/SpineObject";
+import "pixi-spine";
 
 export class PixiApp {
     public readonly soundService: SoundService;
@@ -28,6 +30,7 @@ export class PixiApp {
     private readonly rectangle: RectangleObject;
     private readonly rectangleChess: RectangleObject;
     private readonly bottomCoin: SpriteObject;
+    private readonly spineBoy: SpineObject;
 
     private constructor(parent: HTMLElement, soundService: SoundService) {
         this.app = PixiApp.initPixi(parent);
@@ -47,6 +50,9 @@ export class PixiApp {
         this.rectangleChess = rectangleChess;
         this.bottomCoin = coin;
 
+        const {spineBoy} = this.initSpineObjects();
+        this.spineBoy = spineBoy;
+
         this.animateGameObjects();
         this.applyTransformations();
         this.applyMasks();
@@ -58,6 +64,7 @@ export class PixiApp {
             const guiGameObjects: import("./dev/AppDevTools").TGUIGameObjects = {
                 rectangle: this.rectangle,
                 spriteGrid: this.spriteGrid,
+                spine: this.spineBoy,
             };
             const guiServices: import("./dev/AppDevTools").TGUIServices = {
                 filterService: this.filterService,
@@ -68,7 +75,7 @@ export class PixiApp {
     }
 
     public static async create(parent: HTMLElement): Promise<PixiApp> {
-        await Assets.load(AssetConstants.SYMBOLS_JSON);
+        await Assets.load([AssetConstants.SYMBOLS_JSON, AssetConstants.DRAGON_JSON, AssetConstants.SPINEBOY_JSON]);
 
         const soundService = new SoundService();
         await soundService.loadSounds();
@@ -99,6 +106,10 @@ export class PixiApp {
         this.gameObjectManager.register(
             GameObjectsConstants.SPRITE,
             new PooledGameObjectFactory(() => new SpriteObject(), 15)
+        );
+        this.gameObjectManager.register(
+            GameObjectsConstants.SPINE,
+            new PooledGameObjectFactory(() => new SpineObject(), 1)
         );
     }
 
@@ -147,6 +158,36 @@ export class PixiApp {
             rectangle,
             rectangleChess,
             coin,
+        };
+    }
+
+    private initSpineObjects() {
+        const dragon = this.gameObjectManager.create(GameObjectsConstants.SPINE, {
+            imgUrl: AssetConstants.DRAGON_JSON,
+            x: this.appWidth * 0.8,
+            y: this.appHeight * 0.3,
+            scale: 0.4,
+            animation: "flying",
+            speed: 0.9
+        });
+        const spineBoy = this.gameObjectManager.create(GameObjectsConstants.SPINE, {
+            imgUrl: AssetConstants.SPINEBOY_JSON,
+            x: this.appWidth * 0.2,
+            y: this.appHeight * 0.7,
+            scale: 0.5,
+            animation: "run",
+            speed: 1
+        });
+
+        spineBoy.spine?.stateData.setMix("hoverboard", "run", 0.4);
+        spineBoy.spine?.stateData.setMix("run", "walk", 0.4);
+        spineBoy.spine?.stateData.setMix("walk", "jump", 0.4);
+
+        this.app.stage.addChild(dragon.view);
+        this.app.stage.addChild(spineBoy.view);
+
+        return {
+            spineBoy,
         };
     }
 

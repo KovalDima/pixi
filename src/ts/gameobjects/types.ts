@@ -25,3 +25,9 @@ export type TSpriteConfig = {
     scale?: number | TPosition,
     anchor?: number | TPosition
 } & TPosition & TSpriteUrl;
+
+export type TSpineConfig = {
+    animation?: string,
+    speed?: number,
+    scale?: number,
+} & TPosition & TSpriteUrl;
